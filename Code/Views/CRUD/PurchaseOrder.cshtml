@@ -1,5 +1,46 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using System.Data  
+@using System.Data.SqlClient  
+@model System.Data.DataTable  
+@{  
+Layout = null;  
+}  
+<!DOCTYPE html>  
+<html>  
+  
+     <head>  
+          <meta name="viewport" content="width=device-width" />  
+          <title>PurchaseOrder</title>  
+     </head>  
+  
+     <body style="width: auto; margin: 0 40%;">  
+            
+        <h2>PurchaseOrder</h2>  
+        <br />  
+        @{  
+        if (Model.Rows.Count > 0)  
+        {  
+        <table border="1">  
+            <thead>  
+                    <tr>
+                        <td>  
+                            PO Number 
+                        </td>
+                    </tr>  
+            </thead>  
+            @foreach (DataRow dr in Model.Rows)  
+            {  
+            <tr>  
+                    <td>@dr["PONumber"].ToString() </td>  
+            </tr>  
+            }  
+        </table>  
+        <br />  
+        }  
+        else  
+        {  
+        <span> No records found!!</span>  
+        }  
+        } 
+     </body>  
+  
+</html> 

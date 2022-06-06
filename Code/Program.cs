@@ -1,7 +1,10 @@
+using TestForm.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<Interface, Repository>();
 
 var app = builder.Build();
 
@@ -22,6 +25,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=CRUD}/{action=Vendor}/{id?}");
+    pattern: "{controller=CRUD}/{action=PurchaseOrder}/{id?}");
 
 app.Run();

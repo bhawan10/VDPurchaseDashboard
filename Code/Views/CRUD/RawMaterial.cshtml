@@ -9,12 +9,12 @@ Layout = null;
   
      <head>  
           <meta name="viewport" content="width=device-width" />  
-          <title>Home</title>  
+          <title>Items</title>  
      </head>  
   
      <body style="width: auto; margin: 0 40%;">  
             
-        <h2>Vendor Name</h2>  
+        <h2>Items in PO</h2>  
         <br />  
         @{  
         if (Model.Rows.Count > 0)  
@@ -23,15 +23,16 @@ Layout = null;
             <thead>  
                     <tr>
                         <td>  
-                            Name  
+                            Operation ID 
                         </td>
                     </tr>  
             </thead>  
             @foreach (DataRow dr in Model.Rows)  
             {  
             <tr>  
-                    <td>@dr["Location"].ToString() </td>  
+                    <td>@dr["OperationId"].ToString() </td> 
             </tr>  
+                     
             }  
         </table>  
         <br />  

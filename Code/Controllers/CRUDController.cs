@@ -1,41 +1,37 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TestForm.Models;
 using System.Data;
+using TestForm.Repository;
+
 
 namespace TestForm.Controllers
 {
     public class CRUDController : Controller
     {
-        public IActionResult Vendor()
+        private readonly Interface repo;
+
+        public CRUDController(Interface _repository)
         {
-            CRUDModel model = new CRUDModel();
-            string name = "Ankur.AD375";
-            DataTable dt = model.GetAllVendors(name);
+            this.repo = _repository;
+        }
+
+        public IActionResult Vendor(string expeditorName)
+        {
             
-            return View("Vendor",dt);
+            return View("Vendor",repo.getVendors(expeditorName));
         }
-        public IActionResult PurchaseOrder()
+        public IActionResult PurchaseOrder(string vendorName)
         {
-            CRUDModel model = new CRUDModel();
-            string vendorSelected = "Toshi Automatic Systems Pvt. Ltd";
-            DataTable dt = model.GetAllVendors(vendorSelected);
-            Console.WriteLine(dt);
-            return View("PurchaseOrder", dt);
+            return View("PurchaseOrder", repo.getPOs(vendorName));
         }
-        public IActionResult ItemsFromOperation()
+        public IActionResult ItemsFromOperation(string OperationId, string POId)
         {
-            CRUDModel model = new CRUDModel();
-            string OperationId = "10";
-            string POId = "859";
-            DataTable dt = model.GetItemsFromOperation(OperationId, POId);
-            return View("PurchaseOrder", dt);
+            return View("Operation", repo.getItemsfromOperation(OperationId, POId));
         }
         public IActionResult Category()
         {
-            CRUDModel model = new CRUDModel();
             string POId = "859";
-            DataTable dt = model.getDistinctCategoryIds(POId);
-            return View("POId", dt);
+            return View("RawMaterial", repo.getDistinctCategory(POId));
         }
     }
 }
