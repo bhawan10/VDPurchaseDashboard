@@ -1,47 +1,39 @@
 ﻿@using System.Data  
 @using System.Data.SqlClient  
 @model System.Data.DataTable  
-@{  
-Layout = null;  
-}  
+@{
+    Layout = null;
+}
+@{
+   List<SelectListItem> listItems = new List<SelectListItem>();
+   listItems.Add(new SelectListItem { Text = "1 kg", Value = "1" });
+   listItems.Add(new SelectListItem { Text = "2 kg", Value = "2" });
+   listItems.Add(new SelectListItem { Text = "3 kg", Value = "3" });
+   listItems.Add(new SelectListItem { Text = "4 kg", Value = "4" });
+   listItems.Add(new SelectListItem { Text = "5 kg", Value = "5" });
+   }
 <!DOCTYPE html>  
 <html>  
   
      <head>  
           <meta name="viewport" content="width=device-width" />  
-          <title>Items</title>  
+          <title>Items</title>
+          <link rel="stylesheet" href="styles/kendo.common.min.css" />
+          <link rel="stylesheet" href="styles/kendo.default.min.css" />
+          <link rel="stylesheet" href="styles/kendo.default.mobile.min.css" />
+          <script src="js/jquery.min.js"></script>
+          <script src="js/kendo.all.min.js"></script>
      </head>  
   
-     <body style="width: auto; margin: 0 40%;">  
-            
-        <h2>Items in PO</h2>  
-        <br />  
-        @{  
-        if (Model.Rows.Count > 0)  
-        {  
-        <table border="1">  
-            <thead>  
-                    <tr>
-                        <td>  
-                            Operation ID 
-                        </td>
-                    </tr>  
-            </thead>  
-            @foreach (DataRow dr in Model.Rows)  
-            {  
-            <tr>  
-                    <td>@dr["OperationId"].ToString() </td> 
-            </tr>  
-                     
-            }  
-        </table>  
-        <br />  
-        }  
-        else  
-        {  
-        <span> No records found!!</span>  
-        }  
-        } 
+     <body style="width: auto; margin: 0 40%;">
+         <input id="dropdownlist" />
+            <script>
+            $("#dropdownlist").kendoDropDownList({
+              dataSource: {
+                data: ["One", "Two"]
+              }
+            });
+            </script>
      </body>  
   
 </html> 

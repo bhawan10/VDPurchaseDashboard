@@ -15,7 +15,7 @@ namespace TestForm.Repository
         {
             connection();
             DataTable dt = new DataTable();
-            SqlCommand cmd = new SqlCommand("getVendorName", conn);
+            SqlCommand cmd = new SqlCommand("getVendors", conn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Expeditor", expeditorName);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -28,13 +28,17 @@ namespace TestForm.Repository
         {
             connection();
             DataTable dt = new DataTable();
-            SqlCommand cmd = new SqlCommand("getPurchaseOrder", conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@Location", vendorName);
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            conn.Open();
-            da.Fill(dt);
-            conn.Close();
+            if (!string.IsNullOrEmpty(vendorName))
+            {
+                SqlCommand cmd = new SqlCommand("getPurchaseOrder", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Location", vendorName);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                conn.Open();
+                da.Fill(dt);
+                conn.Close();
+            }
+
             return dt;
         }
         public DataTable getItemsfromOperation(string operationId, string POId)

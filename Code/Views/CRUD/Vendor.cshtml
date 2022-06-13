@@ -1,46 +1,32 @@
-﻿@using System.Data  
-@using System.Data.SqlClient  
-@model System.Data.DataTable  
-@{  
-Layout = null;  
-}  
-<!DOCTYPE html>  
-<html>  
-  
-     <head>  
-          <meta name="viewport" content="width=device-width" />  
-          <title>Home</title>  
-     </head>  
-  
-     <body style="width: auto; margin: 0 40%;">  
-            
-        <h2>Vendor Name</h2>  
-        <br />  
-        @{  
-        if (Model.Rows.Count > 0)  
-        {  
-        <table border="1">  
-            <thead>  
-                    <tr>
-                        <td>  
-                            Name  
-                        </td>
-                    </tr>  
-            </thead>  
-            @foreach (DataRow dr in Model.Rows)  
-            {  
-            <tr>  
-                    <td>@dr["Location"].ToString() </td>  
-            </tr>  
-            }  
-        </table>  
-        <br />  
-        }  
-        else  
-        {  
-        <span> No records found!!</span>  
-        }  
-        } 
-     </body>  
-  
-</html> 
+﻿@{
+    var getAllVendorsList = Url.Action("GetAllVendors", "CRUD");
+    var getAllPurchaseOrders = Url.Action("PurchaseOrder", "CRUD");
+}
+<head>
+  <script src="~/js/ExpeditorForm.js" asp-append-version="true"></script>
+</head>
+
+<div id="mainData" 
+    data-get-all-vendors-list ="@getAllVendorsList"
+    data-get-all-purchase-orders = "@getAllPurchaseOrders" 
+    data="hello"></div>
+
+
+@using (Html.BeginForm("SaveProgress", "CRUD", FormMethod.Post, new {@id ="formCurrentProgress"}))
+{
+    <div class="form-group">
+        <label for="vendor"> Select Vendor </label>
+        <input class="form-control" name="vendor" id="vendor">
+    </div>
+
+    <div class="form-group">
+        <label for="POs"> Select Purchase Order </label>
+        <input class="form-control" name="PO" id="PO">
+    </div>  
+}
+
+<script>
+    $(document).ready(function() {
+        window.ExpeditorData.onDocumentReady();
+    });
+</script>
