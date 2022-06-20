@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TestForm.Models;
 using System.Data;
 using TestForm.Repository;
-
+using TestForm.Repository.DTOs;
 
 namespace TestForm.Controllers
 {
@@ -19,44 +18,72 @@ namespace TestForm.Controllers
         {
             return View("Vendor");
         }
-        public List<string> GetAllVendors()
+        public List<DropDownList> GetAllVendors()
         {
             string expeditorName = "Ankur.AD375";
-            DataTable check = repo.getVendors(expeditorName); 
-            List<string> result = new List<string>();
-            foreach(DataRow row in check.Rows)
+            DataTable dt = repo.getVendors(expeditorName); 
+            List<DropDownList> VendorList = new List<DropDownList>();
+            foreach(DataRow row in dt.Rows)
             {
-                result.Add(row["Location"].ToString());
+                DropDownList temp = new DropDownList();
+                temp.Id = int.Parse(row["Id"].ToString());
+                temp.text = row["Location"].ToString();
+                VendorList.Add(temp);
+                //result[0].VendorId.Add(row["VendorId"]);
+                //result.Add(row["Location"]);
             }
-            return result;
+            return VendorList;
         }
-        /*public IActionResult PurchaseOrder(string vendorName)
-        {
-            return View("PurchaseOrder", repo.getPOs(vendorName));
-        }*/
 
-        public List<string> PurchaseOrder(string vendor)
+        public List<DropDownList> PurchaseOrder(string vendor)
         {
-            //string vendorName2 = "Micromatic Manufacturing systems Pvt Ltd";
-            //Console.WriteLine("hello");
             //Console.WriteLine(vendor);
-            DataTable check = repo.getPOs(vendor);
-            List<string> POs = new List<string>();
-            foreach (DataRow row in check.Rows)
+            DataTable dt = repo.getPOs(vendor);
+            List<DropDownList> POs = new List<DropDownList>();
+            foreach (DataRow row in dt.Rows)
             {
-                POs.Add(row["PONumber"].ToString());
+                DropDownList temp = new DropDownList();
+                temp.Id = int.Parse(row["PkId"].ToString());
+                temp.text = row["PONumber"].ToString();
+                POs.Add(temp);
+
             }
             return POs;
         }
 
-        public IActionResult ItemsFromOperation(string OperationId, string POId)
+        public List<DropDownList> GetCategory(string POId)
         {
-            return View("Operation", repo.getItemsfromOperation(OperationId, POId));
+            DataTable dt = repo.getDistinctCategory(POId);
+            List<DropDownList> Category = new List<DropDownList>();
+            foreach (DataRow row in dt.Rows)
+            {
+                DropDownList temp = new DropDownList();
+                temp.Id = int.Parse(row["id"].ToString());
+                temp.text = row["operationName"].ToString();
+                Category.Add(temp);
+
+            }
+            return Category;
         }
-        public IActionResult Category(IFormCollection frm)
+
+        public List<FormDataList> GetItemsFromOperationAndPO(string operationId, string poId)
         {
-            string POId = "859";
-            return View("RawMaterial", repo.getDistinctCategory(POId));
+            Console.WriteLine(operationId + " " + poId);
+            DataTable dt = repo.getItemsfromOperation(operationId, poId);
+            List<FormDataList> Items = new List<FormDataList>();
+            foreach(DataRow row in dt.Rows)
+            {
+                FormDataList temp = new FormDataList();
+                temp.ItemId = int.Parse(row["ITEM_ID"].ToString());
+                temp.ItemDescription = row["ITEM_DESCRIPTION"].ToString();
+                temp.ToolNo = row["ToolNo"].ToString();
+                temp.Station = row["Station"].ToString();
+                temp.PositionNo = row["PositionNo"].ToString();
+                temp.ReworkNo = row["ReworkNo"].ToString();
+                Items.Add(temp);
+            }
+            return Items;
         }
+
     }
 }
