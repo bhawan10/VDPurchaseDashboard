@@ -7,11 +7,31 @@
     }
     public class FormDataList
     {
-        public Int64 ItemId { get; set; }
-        public string ItemDescription { get; set; }
-        public string ToolNo { get; set; }
-        public string Station { get; set; }
-        public string PositionNo { get; set; }
-        public string ReworkNo { get; set; }
+        public Int64 id { get; set; }
+        public string toolNo { get; set; }
+        public string station { get; set; }
+        public string positionNo { get; set; }
+        public string reworkNo { get; set; }
+        public string modelNo { get; set; } 
+        public Int64 doneQuantity { get; set; } = 0;
+
+        public Int64 givenQuantity { get; set; }
     }
+    
+    public class UT_ExpeditorForm
+    {
+        public long PkId { get; set; }
+        public long POItemID { get; set; }
+        public int OperationId { get; set; }
+        public string entryBy { get; set; }
+        public DateTime entryDate { get; set; }
+        public int totalQuantity { get; set; }
+        public int? doneQuantity { get; set; }
+        public bool isActive { get; set; }
+        public bool isCompleted { get; set; }
+        public int POId { get; set; }
+    }
+
+
 }
+
