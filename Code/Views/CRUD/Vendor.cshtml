@@ -1,8 +1,82 @@
-﻿@{
+﻿
+@{
     var getAllVendorsList = Url.Action("GetAllVendors", "CRUD");
     var getAllPurchaseOrders = Url.Action("PurchaseOrder", "CRUD");
     var getAllDistinctCategory = Url.Action("GetCategory", "CRUD");
     var getAllItemsList = Url.Action("GetItemsFromOperationAndPO", "CRUD");
+    var sendAllItemsList = Url.Action("StoreData", "CRUD");
+    var check = Url.Action("PutExpeditorData", "CRUD");
+}
+
+
+<head>
+  <script src="~/js/ExpeditorForm.js" asp-append-version="true"></script>
+  <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+
+
+<div id="notification"></div>
+
+
+<div id="mainData" 
+    data-get-all-vendors-list ="@getAllVendorsList"
+    data-get-all-purchase-orders = "@getAllPurchaseOrders" 
+    data-get-all-distinct-category = "@getAllDistinctCategory"
+    data-get-all-items-list = "@getAllItemsList"
+    data-send-all-items-list = "@sendAllItemsList"
+    data-check="@check">
+</div>
+
+
+<nav class="navbar navbar-expand-lg navbar-light mb-3">
+  <a class="navbar-brand" href="#"><img src="~/images/FalconLogo.png" alt="Falcon" width="125" height:"25"></img></a>
+  <button id="finalSubmit" class="btn btn-primary ms-auto">Submit</button>
+</nav>
+
+<div class="row mb-3">
+    <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group getcentre">
+            <label class="center" for="vendor">Select Vendor</label>
+            <input class="center" name="vendor" id="vendor">
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group getcentre">
+            <label class="center" for="PO">Select PurchaseOrder</label>
+            <input class="center" name="PO" id="PO">
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group getcentre">
+            <label class="center" for="operation">Select Operation</label>
+            <input class="center" name="operation" id="operation">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="centerForDropDown" id="form"></div>
+</div>
+
+
+
+
+<script>
+    $(document).ready(function() {
+        window.ExpeditorData.onDocumentReady();
+    });
+</script>
+
+
+@*button*@
+
+
+@*@{
+    var getAllVendorsList = Url.Action("GetAllVendors", "CRUD");
+    var getAllPurchaseOrders = Url.Action("PurchaseOrder", "CRUD");
+    var getAllDistinctCategory = Url.Action("GetCategory", "CRUD");
+    var getAllItemsList = Url.Action("GetItemsFromOperationAndPO", "CRUD");
+    var sendAllItemsList = Url.Action("StoreData", "CRUD");
+    var check = Url.Action("PutExpeditorData", "CRUD");
 }
 <head>
   <script src="~/js/ExpeditorForm.js" asp-append-version="true"></script>
@@ -12,31 +86,40 @@
     data-get-all-vendors-list ="@getAllVendorsList"
     data-get-all-purchase-orders = "@getAllPurchaseOrders" 
     data-get-all-distinct-category = "@getAllDistinctCategory"
-    data-get-all-items-list = "@getAllItemsList">
+    data-get-all-items-list = "@getAllItemsList"
+    data-send-all-items-list = "@sendAllItemsList"
+    data-check="@check">
 </div>
 
-
-@using (Html.BeginForm("SaveProgress", "CRUD", FormMethod.Post, new {@id ="formCurrentProgress"}))
-{
-    <div class="form-group">
+<div id="notification"></div>
+    <div>
         <label for="vendor"> Select Vendor </label>
-        <input class="form-control" name="vendor" id="vendor">
+        <input name="vendor" id="vendor">
     </div>
-
-    <div class="form-group">
+    <br>
+    <div >
         <label for="POs"> Select Purchase Order </label>
-        <input class="form-control" name="PO" id="PO">
+        <input name="PO" id="PO">
     </div>  
-
-    <div class="form-group">
+    <br>
+    <div>
         <label for="POs"> Select Operation </label>
-        <input class="form-control" name="operation" id="operation">
+        <input name="operation" id="operation">
     </div>  
+    <br>
     <div id="form"></div>
-}
+    <button id="finalSubmit" class="btn btn-primary">Submit</button>
+
+
+
+
+
 
 <script>
     $(document).ready(function() {
         window.ExpeditorData.onDocumentReady();
     });
 </script>
+@*button*@
+
+
